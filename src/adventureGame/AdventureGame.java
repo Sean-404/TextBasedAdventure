@@ -19,6 +19,8 @@ public class AdventureGame {
 		"\n\nYour starting character has 10 HP and a Plastic Sword as your starting weapon." +
 		"\nUse these wisely.");
 		
+		System.out.println("--- TOWN OF BEGINNINGS---");
+		
 	}
 
 }
