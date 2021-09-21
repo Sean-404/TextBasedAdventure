@@ -41,8 +41,26 @@ public class AdventureGame {
 			beginning();
 		}
 		
-<<<<<<< Updated upstream
-		//Monster goblin = new Monster("Goblin", 4, 2);
+		System.out.println("You see a sign facing North (1), East (2), South (3) and West (4). which way will you go?");
+		choice = Integer.valueOf(s.nextLine());
+		if (choice == 1) {
+			System.out.println("You decided to head North\n");
+			goNorth();
+		}
+		else if (choice == 2) {
+			System.out.println("You decided to head East\n");
+			goEast();
+		} else if(choice == 3) {
+			System.out.println("You decided to head South\n");
+			goSouth();
+		} else if(choice == 4) {
+			System.out.println("You decided to head West\n");
+			goWest();
+		}
+		else {
+			System.out.println("Invalid input");
+			beginning();
+		}
 	}
 	
 	public static void viewStatistics() {
@@ -72,26 +90,6 @@ public class AdventureGame {
 		int currentDamage = currentWeapon.getWeaponDamage();
 		currentWeapon.setWeaponDamage(currentDamage + 2);
 		player.setPlayerWeapon(currentWeapon);
-		System.out.println(player.getPlayerWeapon().getWeaponDamage());
-		
-		//Sheen's code for bakery or whatever he's doing idk
-		
-		System.out.println("You see a sign facing North (1) and East (2), which way will you go?");
-		int choice = Integer.valueOf(s.nextLine());
-		if (choice == 1) {
-			System.out.println("You decided to head North\n");
-			goNorth();
-		}
-		else if (choice == 2) {
-			System.out.println("You decided to head East\n");
-			goEast();
-		}
-		else {
-			System.out.println("Invalid input");
-			main(args);
-		}
-		
-		
 	}
 	
 	public static void goNorth(){
@@ -102,6 +100,22 @@ public class AdventureGame {
 		Monster goblin = new Monster("Goblin", 5, 3);
 		System.out.println("You encounter a Goblin!\n");
 		System.out.println("---BEGIN BATTLE---\n");
+	}
+	
+	public static void goSouth() {
+		System.out.println("You make your way out of the village but you suddenly get hit by a boulder!");
+		System.out.println("--- YOU DIED ---\n\nGo back to the main menu? (Y/N)");
+		String choice = s.nextLine();
+		if(choice.equals("Y") || choice.equals("y")) {
+			main(null);
+		} else {
+			System.out.println("Goodbye!");
+			System.exit(0);
+		}
+	}
+	
+	public static void goWest() {
+		
 	}
 
 }
