@@ -41,6 +41,7 @@ public class AdventureGame {
 			beginning();
 		}
 		
+<<<<<<< Updated upstream
 		//Monster goblin = new Monster("Goblin", 4, 2);
 	}
 	
@@ -72,6 +73,35 @@ public class AdventureGame {
 		currentWeapon.setWeaponDamage(currentDamage + 2);
 		player.setPlayerWeapon(currentWeapon);
 		System.out.println(player.getPlayerWeapon().getWeaponDamage());
+		
+		//Sheen's code for bakery or whatever he's doing idk
+		
+		System.out.println("You see a sign facing North (1) and East (2), which way will you go?");
+		int choice = Integer.valueOf(s.nextLine());
+		if (choice == 1) {
+			System.out.println("You decided to head North\n");
+			goNorth();
+		}
+		else if (choice == 2) {
+			System.out.println("You decided to head East\n");
+			goEast();
+		}
+		else {
+			System.out.println("Invalid input");
+			main(args);
+		}
+		
+		
+	}
+	
+	public static void goNorth(){
+		
+	}
+	
+	public static void goEast(){
+		Monster goblin = new Monster("Goblin", 5, 3);
+		System.out.println("You encounter a Goblin!\n");
+		System.out.println("---BEGIN BATTLE---\n");
 	}
 
 }
