@@ -87,14 +87,14 @@ public class AdventureGame {
 	}
 	
 	public static void goBakery() {
-		System.out.println("You receive a piece of break from the bakery!" +
+		System.out.println("You receive a piece of bread from the bakery!" +
 		" (+2 max health)");
 		int currentHealth = player.getPlayerHealth();
 		player.setPlayerHealth(currentHealth + 2);
 	}
 	
 	public static void goBlacksmith() {
-		System.out.println("You receive a wooden sword! (+2 attack damage)");
+		System.out.println("You receive a sword upgrade! (+2 attack damage)");
 		Weapon currentWeapon = player.getPlayerWeapon();
 		int currentDamage = currentWeapon.getWeaponDamage();
 		currentWeapon.setWeaponDamage(currentDamage + 2);
@@ -102,6 +102,7 @@ public class AdventureGame {
 	}
 	
 	public static void fight() {
+		System.out.println("--- FIGHT ---");
 		do {
 			playerAttack();
 			if(monster.getMonsterHealth() > 0) {
@@ -140,7 +141,7 @@ public class AdventureGame {
 	}
 	
 	public static void gameOver() {
-		System.out.println("--- YOU DIED ---\n\nGo back to the main menu? (Y/N)");
+		System.out.println("\n--- YOU DIED ---\n\nGo back to the main menu? (Y/N)");
 		String choice = s.nextLine();
 		if(choice.equals("Y") || choice.equals("y")) {
 			main(null);
@@ -172,9 +173,25 @@ public class AdventureGame {
 		System.out.println("You encounter a Troll!\n");
 		monster = new Monster("Troll",5,2);
 		fight();
-		
-		System.out.println("The " + monster.getMonsterName() + " dropped a spiked club! (5 attack)\n");
-		player.setPlayerWeapon(new Weapon("Spiked club", 5));
+		goWest2();
+	}
+	
+	public static void goWest2() {
+		System.out.println("The " + monster.getMonsterName() + " dropped a spiked club! (5 attack)\n"
+				+ "Do you (1) pick it up or do you (2) leave it? ");
+		int choice = Integer.valueOf(s.nextLine());
+		if(choice == 1) {
+			System.out.println("You pick up the spiked club.");
+			player.setPlayerWeapon(new Weapon("Spiked Club", 5));
+		} else if(choice == 2) {
+			System.out.println("You leave the spiked club.");
+		} else if(choice == 3) {
+			viewStatistics();
+			goWest2();
+		} else {
+			System.out.println("Invalid input.");
+			goWest2();
+		}
 		bridgeTunnel();
 	}
 	
@@ -196,7 +213,7 @@ public class AdventureGame {
 	}
 	
 	public static void goBridge() {
-		System.out.println("You cross the bridge and end up outside a castle.\n\nA skeleton appears!");
+		System.out.println("You cross the bridge and end up outside a castle.\n\nA skeleton appears!\n");
 		monster = new Monster("Skeleton",6,3);
 		fight();
 		System.out.println("The " + monster.getMonsterName() + " dropped a healing potion! (+5 health)\n");
@@ -214,6 +231,7 @@ public class AdventureGame {
 		int choice = Integer.valueOf(s.nextLine());
 		if(choice == 1) {
 			fight();
+			goCastle2();
 		} else if(choice == 2) {
 			talkToDragon();
 		} else if(choice == 3) {
@@ -225,9 +243,73 @@ public class AdventureGame {
 		}
 	}
 	
-	public static void talkToDragon() {
-		
+	public static void goCastle2() {
+		System.out.println("The " + monster.getMonsterName() + " dropped Dragon Claws! (10 attack)\n"
+				+ "Do you (1) pick it up or do you (2) leave it? ");
+		int choice = Integer.valueOf(s.nextLine());
+		if(choice == 1) {
+			System.out.println("You pick up the Dragon Claws");
+			player.setPlayerWeapon(new Weapon("Dragon Claws",10));
+		} else if(choice == 2) {
+			System.out.println("You leave the Dragon Claws.");
+		} else if(choice == 3) {
+			viewStatistics();
+			goCastle2();
+		}
+		System.out.println("The " + monster.getMonsterName() + " also dropped the gold ring!");
+		exitCastle();
 	}
 	
+	public static void talkToDragon() {
+		System.out.println("You talk to the " + monster.getMonsterName() + 
+				". He asks if you are willing to give up your weapon for him."
+				+ "\nDo you (1) give him your weapon or (2) not give him your weapon: ");
+		int choice = Integer.valueOf(s.nextLine());
+		if(choice == 1) {
+			System.out.println("The " + monster.getMonsterName() + " takes your weapon.\n"
+					+ "He adds Elder Dragon scales to the weapon! (+5 attack)"
+					+ "\nHe lets you exit the castle with no harm.");
+			Weapon currentWeapon = player.getPlayerWeapon();
+			int currentDamage = currentWeapon.getWeaponDamage();
+			currentWeapon.setWeaponDamage(currentDamage + 5);
+			player.setPlayerWeapon(currentWeapon);
+			System.out.println("The " + monster.getMonsterName() + " also gives you the gold ring!");
+			exitCastle();
+		} else if(choice == 2) {
+			System.out.println("The " + monster.getMonsterName() + " becomes enraged by this and gains 20 attack damage!"
+					+ "\nHe won't let you leave!\nYou may not win this fight!\n");
+			monster.setMonsterAttack(monster.getMonsterAttack() + 20);
+			fight();
+		} else if(choice == 3) {
+			viewStatistics();
+			talkToDragon();
+		} else {
+			System.out.println("Invalid input");
+			talkToDragon();
+		}
+	}
 
+	public static void exitCastle() {
+		System.out.println("\nYou exit the castle with the gold ring and return back to the village"
+				+ ".\nDo you (1) give the gold ring to the village or (2) keep the ring for yourself: ");
+		int choice = Integer.valueOf(s.nextLine());
+		if(choice == 1) {
+			System.out.println("--- GOOD ENDING ----\nYou give the gold ring to the people of the village" +
+					" and they all use it to thrive and protect themselves!"
+					+ "\nYou become an Elder Knight and have respect from everyone in the village.");
+			ending();
+		} else if(choice == 2) {
+			System.out.println("--- BAD ENDING ---\nYou take the gold ring for yourself! The gold ring "
+					+ "gives you immense power,\nwhich eventually corrupts you and causes the destruction of the village!"
+					+ "\nBetter luck next time!");
+			ending();
+		}
+	}
+	
+	public static void ending() {
+		System.out.println("\n--- GAME OVER ---\n\nThanks for playing!\nYour final player statistics:\n");
+		viewStatistics();
+		System.exit(0);
+	}
+	
 }
